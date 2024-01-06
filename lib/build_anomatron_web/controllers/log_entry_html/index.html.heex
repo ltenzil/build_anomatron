@@ -1,0 +1,29 @@
+<.header>
+  Listing Builds : <.count records={@builds}></.count>
+</.header>
+
+<.table id="builds" rows={@builds} >
+  <:col :let={build} label="status"><%= build.status %></:col>
+  <:col :let={build} label="Job name"><%= build.job_name %></:col>
+  <:col :let={build} label="Number"><%= build.job_number %></:col>
+  <:col :let={build} label="Job Url"><%= build.job_url %></:col>
+
+  <:col :let={build} label="User Name"><%= build.user_name %></:col>
+  <:col :let={build} label="Console url"><%= build.console_url %></:col>
+
+  <:col :let={build} label="Error count"><%= build.error_count %></:col>
+  <:col :let={build} label="Warning count"><%= build.warning_count %></:col>
+  <:col :let={build} label="error_stack_trace"><%= build.error_stack_trace %></:col>
+  
+
+  <:col :let={build} label="execution_time"><%= to_duration(build.execution_time) %></:col>
+  <:col :let={build} label="estimated_duration"><%= to_duration(build.estimated_duration) %></:col>
+  <:col :let={build} label="job_timestamp"><%= to_datetime(build.job_timestamp) %></:col>
+
+
+  <:col :let={build} label="artifacts_count"><%= build.artifacts_count %></:col>
+  <:col :let={build} label="triggered_builds"><%= build.triggered_builds %></:col>
+  <:col :let={build} label="triggered_build_count"><%= build.triggered_build_count %></:col>
+
+  <:col :let={build} label="built_on"><%= build.built_on %></:col>
+</.table>

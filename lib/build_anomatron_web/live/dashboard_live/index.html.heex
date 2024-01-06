@@ -1,0 +1,45 @@
+<div class="p-2 container">
+  <div class="grid grid-cols-3 gap-4 ">
+    <div class="col-auto">
+      <input type="text" phx-debounce="1000" phx-keyup="job_name" id="job_name" placeholder="Search by Job" class="w-full" list="jobs" />
+      <datalist id="jobs">
+        
+      </datalist>
+    </div>
+    <div class="col-auto">
+      <input type="text" phx-debounce="1000" phx-keyup="build_status" id="build_status" placeholder="Search by Status" class="w-full" list="statuses" />
+      <datalist id="statuses">
+        <%= for job <- @builds do %>
+          <option value={job.name}><%= job.name %></option>
+        <% end %>
+      </datalist>
+    </div>
+  </div>
+  <br/>
+  <div class="grid grid-cols-4 gap-4 p-1 border-dotted">
+    <div class="col-span-3">
+      <div id="job-chart" phx-hook="HighchartsHook" 
+          data-chart-options= {Jason.encode!(bar_chart_options(@jobs))} ></div>
+      
+    </div>
+    <div class="col-auto">
+      <div id="status-chart" phx-hook="HighchartsHook" 
+      data-chart-options= {Jason.encode!(chart_options(@builds))} ></div>
+    </div>
+  </div>
+
+  
+  <.live_component module={BuildAnomatronWeb.DashboardLive.ZScoreComponent} id="hero" regular_builds={@regular_builds} anomalies={@anomalies} threshold={@threshold} chart_id="zscore-chart" />
+  
+  
+  <%= live_render @socket, BuildAnomatronWeb.DashboardLive.IsolationForestLive, id: "isolation_forest"  %>
+  
+  <%= live_render @socket, BuildAnomatronWeb.DashboardLive.RandomForestLive, id: "random_forest"  %>
+  
+  
+  <%= live_render @socket, BuildAnomatronWeb.DashboardLive.LocalOutlierLive, id: "local_outlier"  %>
+  
+  
+  <%= live_render @socket, BuildAnomatronWeb.DashboardLive.SvmLive, id: "svm_outlier"  %>
+
+</div>

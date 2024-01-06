@@ -1,0 +1,21 @@
+<.header>
+  Build <%= @build.id %>
+  <!-- <:subtitle>This is a build record from your database.</:subtitle> -->
+  <:actions>
+    <.link href={~p"/builds/#{@build}/edit"}>
+      <.button>Edit build</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Job name"><%= @build.job_name %></:item>
+  <:item title="Number"><%= @build.number %></:item>
+  <:item title="Job Url">
+    <.link href={"#{@build.job_url}"} target="_blank" >
+      <.button> Go To: <%= "#{@build.job_name}/#{@build.number}" %> </.button>
+    </.link>
+  </:item>
+</.list>
+
+<.back navigate={~p"/builds"}>Back to builds</.back>

@@ -1,0 +1,25 @@
+<.header>
+  Listing Builds : <.count records={@builds}></.count>
+  <:actions>
+    <.link href={~p"/builds/new"}>
+      <.button>New Build</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="builds" rows={@builds} row_click={&JS.navigate(~p"/builds/#{&1}")} >
+  <:col :let={build} label="Job name"><%= build.job_name %></:col>
+  <:col :let={build} label="Number"><%= build.number %></:col>
+  <:col :let={build} label="Job Url"><%= build.job_url %></:col>
+  <:action :let={build}>
+    <div class="sr-only">
+      <.link navigate={~p"/builds/#{build}"}>Show</.link>
+    </div>
+    <.link navigate={~p"/builds/#{build}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={build}>
+    <.link href={~p"/builds/#{build}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>

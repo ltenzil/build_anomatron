@@ -1,0 +1,135 @@
+<div id="builds-chart" class="p-4 bg-white rounded shadow-lg" style="height: 400px;"></div>
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', () => {
+    Highcharts.chart('builds-chart', {
+      chart: {
+        type: 'scatter',
+        zoomType: 'xy'
+      },
+      title: {
+        text: 'Jenkins Build Times vs Estimated Duration'
+      },      
+      tooltip:{
+        formatter: function() {
+          return `
+            exe_time: ${this.x},
+            est_duration: ${this.y},
+            job: ${this.point.name}
+          `
+        }
+      },
+      xAxis: {
+        title: {
+          text: 'Execution Time (minutes)'
+        }
+      },
+      yAxis: {
+        title: {
+          text: 'Estimated Duration (minutes)'
+        }
+      },
+
+      series: [{
+          name: 'Regular Builds',
+          id: 'regular_builds',
+          color: 'rgba(119, 152, 191, .5)',
+          keys: ['x', 'y', 'name'],
+          marker: {
+            symbol: 'circle'
+          },
+          data: <%= raw Enum.map(@regular_builds, fn build -> data_point(build, "regular") end) |> Jason.encode!() %>
+        },{
+          name: 'Anomalies',
+          id: 'anomalies',
+          color: 'rgba(223, 83, 83, .5)',
+          marker: {
+            symbol: 'triangle'
+          },
+          data: <%= raw Enum.map(@anomalies, fn anomaly -> data_point(anomaly, "anomalies") end) |> Jason.encode!() %>
+      }]
+      // series: [{
+      //   name: 'Regular Builds',
+      //   color: 'rgba(119, 152, 191, .5)',
+      //   data: <%= raw Enum.map(@builds -- @anomalies, fn build -> [to_mins(build.estimated_duration), to_mins(build.execution_time)] end) |> Jason.encode!() %>
+      // }, {
+      //   name: 'Anomalies',
+      //   color: 'rgba(223, 83, 83, .5)',
+      //   data: <%= raw Enum.map(@anomalies, fn build -> [to_mins(build.estimated_duration), to_mins(build.execution_time)] end) |> Jason.encode!() %>
+      // }]
+    });
+  });
+</script>
+
+
+<div class="container mx-auto px-4">
+        <h1 class="text-xl font-bold text-center my-5">Dashboard</h1>
+
+        <!-- Pie Chart -->
+        <div class="chart-container mb-5">
+            <div id="pie-chart" class="bg-white p-4 rounded-lg shadow"></div>
+        </div>
+
+        <!-- Bar Chart -->
+        <div class="chart-container mb-5">
+            <div id="bar-chart" class="bg-white p-4 rounded-lg shadow"></div>
+        </div>
+
+        <!-- Scatter Chart -->
+        <div class="chart-container">
+            <div id="scatter-chart" class="bg-white p-4 rounded-lg shadow"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // Initialize Pie Chart with Sample Data
+        Highcharts.chart('pie-chart', {
+            chart: { type: 'pie' },
+            title: { text: 'Pie Chart' },
+            series: [{
+                name: 'Builds',
+                colorByPoint: true,
+                data: [
+                    { name: 'Success', y: 61.41 },
+                    { name: 'Failed', y: 11.84 },
+                    { name: 'Error', y: 10.85 },
+                    { name: 'Pending', y: 4.67 },
+                    { name: 'Running', y: 4.18 }
+                ]
+            }]
+        });
+
+        // Initialize Bar Chart with Sample Data
+        Highcharts.chart('bar-chart', {
+            chart: { type: 'bar' },
+            title: { text: 'Bar Chart' },
+            xAxis: {
+                categories: ['Build 1', 'Build 2', 'Build 3', 'Build 4', 'Build 5'],
+                title: { text: null }
+            },
+            yAxis: {
+                min: 0,
+                title: { text: 'Execution Time (minutes)', align: 'high' },
+                labels: { overflow: 'justify' }
+            },
+            series: [{
+                name: 'Execution Time',
+                data: [5, 3, 4, 7, 2]
+            }]
+        });
+
+        // Initialize Scatter Chart with Sample Data
+        Highcharts.chart('scatter-chart', {
+            chart: { type: 'scatter' },
+            title: { text: 'Scatter Chart' },
+            xAxis: { title: { text: 'Estimated Duration' }},
+            yAxis: { title: { text: 'Execution Time' }},
+            series: [{
+                name: 'Builds',
+                color: 'rgba(223, 83, 83, .5)',
+                data: [
+                    [20, 30], [30, 40], [40, 50], [50, 60], [60, 70],
+                    [70, 80], [80, 90], [90, 100], [100, 110], [110, 120]
+                ]
+            }]
+        });
+    </script>

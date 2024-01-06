@@ -1,0 +1,11 @@
+<.simple_form :let={f} for={@changeset} action={@action}>
+  <.error :if={@changeset.action}>
+    Oops, something went wrong! Please check the errors below.
+  </.error>
+  <.input field={f[:job_name]} type="text" label="Job name" />
+  <.input field={f[:number]} type="number" label="Number" />
+  <.input field={f[:job_url]} type="text" label="Job Url" />
+  <:actions>
+    <.button>Save Build</.button>
+  </:actions>
+</.simple_form>

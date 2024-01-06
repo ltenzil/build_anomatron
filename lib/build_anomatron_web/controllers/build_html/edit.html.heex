@@ -1,0 +1,8 @@
+<.header>
+  Edit Build <%= @build.id %>
+  <:subtitle>Use this form to manage build records in your database.</:subtitle>
+</.header>
+
+<.build_form changeset={@changeset} action={~p"/builds/#{@build}"} />
+
+<.back navigate={~p"/builds"}>Back to builds</.back>
