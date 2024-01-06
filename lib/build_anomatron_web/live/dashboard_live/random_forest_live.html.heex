@@ -1,4 +1,4 @@
-<div class="random-chart-container py-5 shadow-2xl">  
+<div class="random-chart-container py-2 shadow-lg">  
   <input type="text" id="random_threshold" phx-debounce="1000" phx-keyup="random_threshold" id="random_threshold" placeholder="Change label" list="label-lists" value={@random_threshold} class="right" title="labels"/>
   <datalist id="label-lists">
     <option value="status"></option>
@@ -7,7 +7,7 @@
   
   <div class="grid grid-cols gap-4">
     <div id="random-forest" 
-        class="p-4 bg-white rounded shadow-lg" 
+        class="p-4 bg-white rounded" 
         data-chart-title="Random Forest Anomaly Detection"
         phx-hook="ZScoreChartHook" 
         data-regular-builds={chart_data(@regular_builds)} 

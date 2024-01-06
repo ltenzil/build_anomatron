@@ -9,21 +9,29 @@ defmodule LogAnalysis.ModelTrainer do
     # Handle the response, check for errors, etc.
   end
 
-  def train_random_forest(data) do
+  def train_random_forest(data, label) do
     # Prepare data and labels
     # json_data = Jason.encode!(data, labels: labels})
-    json_data = Jason.encode!(data)
-    labels = Enum.map(data, fn(job) -> 
-      case job[:execution_time] <= job[:estimated_duration] do
-        true -> 1
-        false -> -1
-      end
-    end)
-    json_labels = Jason.encode!(labels)
-    # Call the Python script for training
-    System.cmd("python3", ["scripts/random_forest_train.py", json_data, json_labels])
+    # json_data = Jason.encode!(data)
+    # labels = Enum.map(data, fn(job) -> 
+    #   case job[:execution_time] <= job[:estimated_duration] do
+    #     true -> 1
+    #     false -> -1
+    #   end
+    # end)
+    # json_labels = Jason.encode!(labels)
+    # # Call the Python script for training
+    # System.cmd("python3", ["scripts/random_forest_train.py", json_data, json_labels])
     
     # Handle the response
+
+    json_data = Jason.encode!(data)
+    input_label = case label do
+      "status" -> "status"
+      "time" -> "time"
+      _ -> "status"
+    end
+    System.cmd("python3", ["scripts/random_train.py", json_data, input_label])
   end
 
   def train_random(data) do

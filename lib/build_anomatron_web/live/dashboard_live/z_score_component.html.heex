@@ -1,4 +1,4 @@
-<div class="zscore-chart-container py-5 shadow-2xl">
+<div class="zscore-chart-container py-5 shadow-lg">
   <input type="text" id="threshold" phx-target={@myself} phx-debounce="1000" phx-keyup="filter_by_threshold" id="threshold" placeholder="Change threshold" list="threshold-lists" value={@threshold} class="right" title="threshold"/>
   <datalist id="threshold-lists">
     <option value="0.1">0.1</option>
@@ -15,7 +15,7 @@
   <div class="grid grid-cols gap-4">
 
     <div id={@chart_id} 
-        class="p-4 bg-white rounded shadow-lg" 
+        class="p-4 bg-white rounded" 
         phx-hook="ZScoreChartHook" 
         data-chart-title="ZScore Anomaly Detection"
         data-regular-builds={chart_data(@regular_builds)} 

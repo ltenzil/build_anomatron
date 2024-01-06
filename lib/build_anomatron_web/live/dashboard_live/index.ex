@@ -40,6 +40,7 @@ defmodule BuildAnomatronWeb.DashboardLive.Index do
     pie_chart_data = Enum.map(builds, fn(build) ->
       %{y: build.count, name: build.status}
     end)
+    pie_chart_data
   end
 
   defp load_jobs(job) do

@@ -1,5 +1,5 @@
-<div class="p-2 container">
-  <div class="grid grid-cols-3 gap-4 ">
+<div class="py-2 container">
+  <div class="grid grid-cols-3 gap-4">
     <div class="col-auto">
       <input type="text" phx-debounce="1000" phx-keyup="job_name" id="job_name" placeholder="Search by Job" class="w-full" list="jobs" />
       <datalist id="jobs">
@@ -28,18 +28,24 @@
     </div>
   </div>
 
+  <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
   
   <.live_component module={BuildAnomatronWeb.DashboardLive.ZScoreComponent} id="hero" regular_builds={@regular_builds} anomalies={@anomalies} threshold={@threshold} chart_id="zscore-chart" />
+    
+  <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+
   
-  
+
   <%= live_render @socket, BuildAnomatronWeb.DashboardLive.IsolationForestLive, id: "isolation_forest"  %>
   
-  <%= live_render @socket, BuildAnomatronWeb.DashboardLive.RandomForestLive, id: "random_forest"  %>
-  
-  
+  <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+
   <%= live_render @socket, BuildAnomatronWeb.DashboardLive.LocalOutlierLive, id: "local_outlier"  %>
   
+  <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
   
   <%= live_render @socket, BuildAnomatronWeb.DashboardLive.SvmLive, id: "svm_outlier"  %>
+
+
 
 </div>
